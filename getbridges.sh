@@ -11,14 +11,14 @@ curl -s https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/
     # Например, запишем её в файл:
     echo "$line" > /etc/tor/torrc.d/webtunnel.conf
     if [ $? -eq 0 ]; then
-    	touch /etc/torrc.d/webtunnel.conf
+    	touch /etc/tor/torrc.d/webtunnel.conf
     fi
 done
 
 curl -s https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_OBFS4.txt | while IFS= read -r line; do
     echo "$line" > /etc/tor/torrc.d/obfs4.conf
     if [ $? -eq 0 ]; then
-        touch /etc/torrc.d/obfs4.conf
+        touch /etc/tor/torrc.d/obfs4.conf
     fi
 done
 

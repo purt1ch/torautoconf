@@ -9,5 +9,5 @@ touch /etc/tor/torrc.d/obfs4.conf
 # Backup
 cp /etc/tor/torrc /etc/tor/torrc.bak
 # Replace with new torrc
-mv ./torrc /etc/tor/torrc
+cp ./deftorrc /etc/tor/torrc
 ./getbridges.sh

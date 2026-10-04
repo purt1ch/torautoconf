@@ -255,10 +255,13 @@ DataDirectory /var/lib/tor
 ## on subfolders are ignored.
 ## The %include option can be used recursively.
 
+SocksPort 9050
+DNSPort 5353
+TransPort 9040
 # Включение использования мостов
 UseBridges 1
 
 # Указание пути к плагину (измените obfs4proxy на lyrebird, если ставили его)
-ClientTransportPlugin webtunnel exec /usr/bin/lyrebird
+ClientTransportPlugin obfs4,webtunnel exec /usr/bin/lyrebird
 
 %include /etc/tor/torrc.d/*.conf

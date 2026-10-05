@@ -1,36 +1,26 @@
 if [ "$EUID" -ne 0 ]; then echo "❌ Запустите с sudo"
     exit 1
 fi
-touch webtunnel.conf
-touch obfs4.conf
-curl -s https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt | while IFS= read -r line; do
-    # IFS` (Internal Field Separator) — это системная переменная в Bash, которая определяет **разделитель полей** (слов) в строках. 
-    # По умолчанию её значениями являются **пробел, табуляция и перевод строки**. 
-    # Когда мы пишем `IFS= read -r line`, мы временно (только для команды `read`) делаем эту переменную **пустой**.
-    # Здесь вы можете обрабатывать каждую строку (переменная $line)
-    # Например, запишем её в файл:
-    if [[ "$line" == webtunnel* ]]; then
-        echo "Bridge $line" >> webtunnel.conf
+
+get_bridges() {
+    local link=$1
+    local name
+    if [[ $link == "webtunnel"* ]]; then
+        name="webtunnel"
+    elif [[ $link == "obfs4"* ]]; then
+        name="obfs4"
+    else
+        name="top100"
     fi
-done
-if [ $? -ne 0 ]; then
-    touch /etc/tor/torrc.d/webtunnel.conf
-    echo "Попробуйте снова"
-    exit 1
-fi
+    touch $name.conf
+    curl -s $link | while IFS= read -r line; do
+        if [[ "$line" == "webtunnel"* || "$line" == "obfs4"* || "$line" == [0-9]* ]]; then
+            echo "Bridge $line" >> $name.conf
+        fi
+    done
+    mv $name.conf /etc/tor/torrc.d/$name.conf
+}
 
-mv webtunnel.conf /etc/tor/torrc.d/webtunnel.conf
 
-curl -s https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_OBFS4.txt | while IFS= read -r line; do
-    if [[ "$line" == obfs4* ]]; then
-        echo "Bridge $line" >> obfs4.conf
-    fi    
-done
-
-if [ $? -ne 0 ]; then
-    touch /etc/tor/torrc.d/obfs4.conf
-    echo "Попробуйте снова"
-    exit 1
-fi
-
-mv obfs4.conf /etc/tor/torrc.d/obfs4.conf
+# top100 bridges
+get_bridges https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt

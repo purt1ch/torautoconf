@@ -255,13 +255,21 @@ DataDirectory /var/lib/tor
 ## on subfolders are ignored.
 ## The %include option can be used recursively.
 
+# Убираем IPv6
+ClientUseIPv4 1
+ClientUseIPv6 0
+ClientPreferIPv6ORPort 0
+
+# Настройка портов
 SocksPort 9050
 DNSPort 5353
 TransPort 9040
+
 # Включение использования мостов
 UseBridges 1
 
 # Указание пути к плагину (измените obfs4proxy на lyrebird, если ставили его)
 ClientTransportPlugin obfs4,webtunnel exec /usr/bin/lyrebird
 
+# Включение конфигов мостов
 %include /etc/tor/torrc.d/*.conf

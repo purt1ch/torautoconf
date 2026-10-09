@@ -19,7 +19,9 @@ get_bridges() {
     cat temp.txt | xclip -selection clipboard
     if [ $? -eq 0 ]; then
         echo "Папка успешно скопирована в буфер обмена"
-        rm xclip
+        if [ -z xclip ]; then
+            rm xclip
+        fi
     else
         echo "Не удалось скопировать в буфер обмена. Проверьте установку xclip"
     fi

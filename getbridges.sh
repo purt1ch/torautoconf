@@ -3,24 +3,20 @@ if [ "$EUID" -ne 0 ]; then echo "❌ Запустите с sudo"
 fi
 
 get_bridges() {
-    local link=$1
-    local name
-    if [[ $link == "webtunnel"* ]]; then
-        name="webtunnel"
-    elif [[ $link == "obfs4"* ]]; then
-        name="obfs4"
-    else
-        name="top100"
-    fi
-    touch $name.conf
-    curl -s $link | while IFS= read -r line; do
+    local link=$3
+    local name=$1
+    local bridgecount=$2
+    touch "$name.conf"
+    curl -s $link | while IFS= read -r line;
+    do
         if [[ "$line" == "webtunnel"* || "$line" == "obfs4"* || "$line" == [0-9]* ]]; then
-            echo "Bridge $line" >> $name.conf
+            echo "Bridge $line" >> "$name.conf"
         fi
     done
-    mv $name.conf /etc/tor/torrc.d/$name.conf
+    echo $bridgecount
+    head -n 5 "$name.conf" > temp.txt
+    mv temp.txt /etc/tor/torrc.d/$name.conf
 }
 
-
 # top100 bridges
-get_bridges https://raw.githack.com/igareck/vpn-configs-for-russia/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt
+get_bridges top100 5 https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt

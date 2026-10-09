@@ -1,7 +1,3 @@
-if [ "$EUID" -ne 0 ]; then echo "❌ Запустите с sudo"
-    exit 1
-fi
-
 get_bridges() {
     local link=$3
     local name=$1
@@ -25,8 +21,9 @@ get_bridges() {
     else
         echo "Не удалось скопировать в буфер обмена. Проверьте установку xclip"
     fi
-    mv temp.txt /etc/tor/torrc.d/$name.conf
+    sudo mv temp.txt "/etc/tor/torrc.d/$name.conf"
 }
+
 
 # top100 bridges
 get_bridges top100 5 https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt

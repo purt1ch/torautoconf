@@ -13,8 +13,16 @@ get_bridges() {
             echo "Bridge $line" >> "$name.conf"
         fi
     done
-    echo $bridgecount
-    head -n 5 "$name.conf" > temp.txt
+    echo "Добавлено $bridgecount актуальных мостов из $name"
+    head -n $bridgecount "$name.conf" > temp.txt
+    rm "$name.conf"
+    cat temp.txt | xclip -selection clipboard
+    if [ $? -eq 0 ]; then
+        echo "Папка успешно скопирована в буфер обмена"
+        rm xclip
+    else
+        echo "Не удалось скопировать в буфер обмена. Проверьте установку xclip"
+    fi
     mv temp.txt /etc/tor/torrc.d/$name.conf
 }
 

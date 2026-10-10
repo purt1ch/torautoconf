@@ -259,7 +259,11 @@ DataDirectory /var/lib/tor
 ClientUseIPv4 1
 ClientUseIPv6 0
 ClientPreferIPv6ORPort 0
+# Настройка выходного адреса с доступом к Grok
+ExitNodes 185.220.101.128/25
 
+# Выход в Нидерландах
+# ExitNode {nl}
 # Настройка портов
 SocksPort 9050
 DNSPort 5353

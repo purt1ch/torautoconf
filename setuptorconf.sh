@@ -17,9 +17,11 @@ sudo cp ./deftorrc /etc/tor/torrc
 sudo cp ./getbridges.sh /usr/bin/getbridges
 sudo cp ./removebridges.sh /usr/bin/removebridges
 sudo cp ./torgprox.sh /usr/bin/torgprox
+sudo cp ./.gtorextra /usr/bin/.gtorextra
 sudo chmod +x /usr/bin/getbridges
 sudo chmod +x /usr/bin/removebridges
 sudo chmod +x /usr/bin/torgprox
+sudo chmod +x /usr/bin/.gtorextra
 
 echo "** Для установки мостов введите: getbridges"
 echo "** Для удаления мостов введите: removebridges"

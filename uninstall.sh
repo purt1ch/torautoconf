@@ -1,4 +1,4 @@
-sudo rm /usr/bin/getbridges /usr/bin/removebridges /usr/bin/torgprox
+sudo rm /usr/bin/getbridges /usr/bin/removebridges /usr/bin/torgprox /usr/bin/.gtorextra
 if [ $? -eq 0 ]; then
     echo "Удалил скрипты установки/удалния мостов"
 fi

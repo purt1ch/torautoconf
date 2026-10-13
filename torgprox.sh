@@ -19,6 +19,9 @@ if [[ $proxymode != "'manual'" || $socks5port != "9050" || $socks5host != "'127.
     gsettings set org.gnome.system.proxy.socks host '127.0.0.1'
     gsettings set org.gnome.system.proxy.socks port 9050
     gsettings set org.gnome.system.smb display-mode 'disabled'
+    if [ -f ./.gtorextra ]; then
+        ./.gtorextra
+    fi
     sudo systemctl restart tor -v
 else
     gsettings set org.gnome.system.proxy mode 'none'

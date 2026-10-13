@@ -3,7 +3,7 @@ get_bridges() {
     local name=$1
     local bridgecount=$2
     touch "$name.conf"
-    curl -s $link | while IFS= read -r line;
+    curl -fsSL $link | while IFS= read -r line;
     do
         if [[ "$line" == "webtunnel"* || "$line" == "obfs4"* || "$line" == [0-9]* ]]; then
             echo "Bridge $line" >> "$name.conf"
@@ -26,4 +26,6 @@ get_bridges() {
 
 
 # top100 bridges
-get_bridges top100 5 https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt
+get_bridges top100 5 "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_TOP100.txt"
+# # webtunnel bridges
+# get_bridges top100 5 "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/TOR-BRIDGES/TOR_BRIDGES_WEBTUNNEL.txt"
